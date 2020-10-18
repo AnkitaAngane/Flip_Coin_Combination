@@ -8,6 +8,7 @@
 #Declaration
 declare -A singlet
 declare -A doublet
+declare -A triplet
 
 singlet[h]=0
 singlet[t]=0
@@ -25,6 +26,15 @@ dictdoublet[1]=0
 dictdoublet[2]=0
 dictdoublet[3]=0
 
+triplet[hhh]=0
+triplet[hht]=0
+triplet[hth]=0
+triplet[htt]=0
+triplet[thh]=0
+triplet[tht]=0
+triplet[tth]=0
+triplet[ttt]=0
+
 n=1
 
 function percentage(){
@@ -38,6 +48,9 @@ while [ $n -le 21 ]
 do
 	result=$((RANDOM%2))
 	result2=$((RANDOM%2))
+	result3=$((RANDOM%3))
+
+	#For Singlet
 	if [ $result -eq 0 ]
 	then
 		singlet[h]=$((${singlet[h]}+1))
@@ -45,6 +58,7 @@ do
 		singlet[t]=$((${singlet[t]}+1))
 	fi
 
+	#For Doublet
 	if [ $result -eq 0 ]
 	then
 		if [ $result2 -eq 0 ]
@@ -62,10 +76,49 @@ do
 		fi
 	fi
 
+	#For Triplet
+	if [ $result -eq 0 ]
+	then
+		if [ $result2 -eq 0 ]
+                then
+			if [ $result3 -eq 0 ]
+                	then
+				triplet[hhh]=$((${triplet[hhh]}+1))
+			else
+				triplet[hht]=$((${triplet[hht]}+1))
+			fi
+		else
+			if [ $result3 -eq 0 ]
+                        then
+                                triplet[hth]=$((${triplet[hth]}+1))
+                        else
+                                triplet[htt]=$((${triplet[htt]}+1))
+                        fi
+		fi
+	else
+		if [ $result2 -eq 0 ]
+                then
+                        if [ $result3 -eq 0 ]
+                        then
+                                triplet[thh]=$((${triplet[thh]}+1))
+                        else
+                                triplet[tht]=$((${triplet[tht]}+1))
+                        fi
+                else
+                        if [ $result3 -eq 0 ]
+                        then
+                                triplet[tth]=$((${triplet[tth]}+1))
+                        else
+                                triplet[ttt]=$((${triplet[ttt]}+1))
+                        fi
+                fi
+	fi
+
 	n=$((n+1))
 
 done
 
+echo "SINGLET CALCULATION"
 echo "COUNTS for SINGLET are as below "
 echo ${!singlet[@]}
 echo ${singlet[@]}
@@ -76,6 +129,8 @@ percentage ${singlet[h]}
 echo "Percentage count for TAIL is "
 percentage ${singlet[t]}
 
+
+echo "DOUBLET CALCULATION"
 echo "COUNTS for DOUBLET are as below "
 echo ${!doublet[@]}
 echo ${doublet[@]}
@@ -91,6 +146,37 @@ percentage ${doublet[tt]}
 
 echo "Percentage count for TH occurrence "
 percentage ${doublet[th]}
+
+
+echo "TRIPLET CALCULATION"
+echo "COUNTS for TRIPLET are as below "
+echo ${!triplet[@]}
+echo ${triplet[@]}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[hhh]}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[hht]=0}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[hth]=0}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[htt]=0}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[thh]=0}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[tht]=0}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[tth]=0}
+
+echo "Percentage count for HHH occurrence "
+percentage ${triplet[ttt]=0}
+
 
 
 
