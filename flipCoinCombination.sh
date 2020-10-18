@@ -13,18 +13,10 @@ declare -A triplet
 singlet[h]=0
 singlet[t]=0
 
-dictsinglet[0]=0
-dictsinglet[1]=0
-
 doublet[hh]=0
 doublet[ht]=0
 doublet[tt]=0
 doublet[th]=0
-
-dictdoublet[0]=0
-dictdoublet[1]=0
-dictdoublet[2]=0
-dictdoublet[3]=0
 
 triplet[hhh]=0
 triplet[hht]=0
@@ -179,4 +171,52 @@ percentage ${triplet[ttt]=0}
 
 
 
+#for k in "${!doublet[@]}"
+#do
+#	echo "$k = ${doublet[$k]}"
+#done | sort -rn -k3
+
+if [ ${singlet[h]} -gt ${singlet[t]} ]
+then
+	echo "WINNER of SINGLET Combination is h who won ${singlet[h]} times"
+else
+	echo "WINNER of SINGLET Combination is t who won ${singlet[t]} times"
+fi
+
+
+maxdoublet=${doublet[hh]}
+maxdoubletkey=hh
+
+for k in "${!doublet[@]}"
+do
+	if [ "$maxdoublet" -lt "${doublet[$k]}" ]
+	then
+		maxdoublet="${doublet[$k]}"
+		maxdoubletkey="$k"
+	elif [ "$maxdoublet" -eq "${doublet[$k]}" ]
+        then
+                maxdoubletkey="$maxdoubletkey + $k"
+        fi
+
+done
+
+echo "WINNER for DOUBLET Combination is $maxdoubletkey who won $maxdoublet times."
+
+maxtriplet=${triplet[hhh]}
+maxtripletkey=hhh
+
+for k in "${!triplet[@]}"
+do
+        if [ "$maxtriplet" -lt "${triplet[$k]}" ]
+        then
+                maxtriplet="${triplet[$k]}"
+                maxtripletkey="$k"
+        elif [ "$maxtriplet" -eq "${triplet[$k]}" ]
+        then
+                maxtripletkey="$tripletkey + $k"
+        fi
+
+done
+
+echo "WINNER for TRIPLET Combination is $maxtripletkey who won $maxtriplet times."
 
