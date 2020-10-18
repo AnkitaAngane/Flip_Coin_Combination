@@ -213,7 +213,7 @@ do
                 maxtripletkey="$k"
         elif [ "$maxtriplet" -eq "${triplet[$k]}" ]
         then
-                maxtripletkey="$tripletkey + $k"
+                maxtripletkey="$maxtripletkey + $k"
         fi
 
 done
